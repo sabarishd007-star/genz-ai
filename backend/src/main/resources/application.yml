@@ -1,0 +1,26 @@
+server:
+  port: ${BACKEND_PORT:8080}
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: genz-ai-backend
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:genz_ai}
+    username: ${POSTGRES_USER:genz_user}
+    password: ${POSTGRES_PASSWORD:genz_secure_password_2026}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+jwt:
+  secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000} # 24 Hours
+  refresh-expiration-ms: 604800000 # 7 Days
