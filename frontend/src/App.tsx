@@ -6,6 +6,7 @@ import { AppLayout } from './layouts/AppLayout';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
+import { ChatPage } from './pages/ChatPage';
 
 export const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ export const App: React.FC = () => {
           <Route path="/app" element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
               <Route path="dashboard" element={<Dashboard />} />
+              <Route path="chat" element={<ChatPage />} />
               <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
             </Route>
           </Route>
