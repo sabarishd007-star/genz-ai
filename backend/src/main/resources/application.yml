@@ -19,8 +19,34 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  ai:
+    openai:
+      api-key: ${LLM_API_KEY:your_openai_api_key_here}
+      embedding:
+        options:
+          model: text-embedding-3-small
+      chat:
+        options:
+          model: gpt-4o-mini
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1536
+        initialize-schema: true
+        schema-name: public
+        table-name: vector_store
 
 jwt:
   secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
   expiration-ms: ${JWT_EXPIRATION_MS:86400000} # 24 Hours
   refresh-expiration-ms: 604800000 # 7 Days
+
+logging:
+  level:
+    org.springframework.ai: INFO
+    com.genzai: DEBUG
