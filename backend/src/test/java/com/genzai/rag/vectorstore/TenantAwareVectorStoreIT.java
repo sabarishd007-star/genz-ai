@@ -1,4 +1,4 @@
-﻿package com.genzai.rag.vectorstore;
+package com.genzai.rag.vectorstore;
 
 import com.genzai.tenant.TenantContext;
 import org.junit.jupiter.api.*;
@@ -148,30 +148,12 @@ class TenantAwareVectorStoreIT {
     static class TestConfig {
         @Bean
         public EmbeddingModel embeddingModel() {
-            return new EmbeddingModel() {
-                @Override
-                public float[] embed(Document document) {
-                    float[] v = new float[1536];
-                    v[0] = 1.0f;
-                    return v;
-                }
-
-                @Override
-                public float[] embed(String text) {
-                    float[] v = new float[1536];
-                    v[0] = 1.0f;
-                    return v;
-                }
-
-                @Override
-                public List<float[]> embed(List<String> texts) {
-                    return texts.stream().map(t -> {
-                        float[] v = new float[1536];
-                        v[0] = 1.0f;
-                        return v;
-                    }).toList();
-                }
-            };
+            EmbeddingModel mockModel = org.mockito.Mockito.mock(EmbeddingModel.class);
+            List<Double> vector = java.util.Collections.nCopies(1536, 0.1);
+            org.mockito.Mockito.lenient().when(mockModel.embed(org.mockito.ArgumentMatchers.any(Document.class))).thenReturn(vector);
+            org.mockito.Mockito.lenient().when(mockModel.embed(org.mockito.ArgumentMatchers.anyString())).thenReturn(vector);
+            org.mockito.Mockito.lenient().when(mockModel.dimensions()).thenReturn(1536);
+            return mockModel;
         }
 
         @Bean

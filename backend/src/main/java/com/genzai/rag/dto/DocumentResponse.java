@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class DocumentResponse {
     private String id;
     private String name;
+    private String subject;
     private Long size;
     private String status;
     private Integer chunkCount;

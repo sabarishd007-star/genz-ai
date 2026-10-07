@@ -1,4 +1,4 @@
-﻿package com.genzai.rag.vectorstore;
+package com.genzai.rag.vectorstore;
 
 import com.genzai.tenant.TenantContext;
 import org.springframework.ai.document.Document;

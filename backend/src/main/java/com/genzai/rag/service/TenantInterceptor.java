@@ -1,4 +1,4 @@
-﻿package com.genzai.rag.service;
+package com.genzai.rag.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

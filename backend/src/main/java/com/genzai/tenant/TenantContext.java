@@ -1,4 +1,4 @@
-﻿package com.genzai.tenant;
+package com.genzai.tenant;
 
 public class TenantContext {
 

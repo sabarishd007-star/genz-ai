@@ -1,4 +1,4 @@
-﻿package com.genzai.rag.config;
+package com.genzai.rag.config;
 
 import com.genzai.rag.vectorstore.TenantAwareVectorStore;
 import org.springframework.ai.vectorstore.VectorStore;

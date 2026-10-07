@@ -1,4 +1,4 @@
-﻿package com.genzai.rag.vectorstore;
+package com.genzai.rag.vectorstore;
 
 import com.genzai.tenant.TenantContext;
 import org.junit.jupiter.api.AfterEach;
@@ -136,8 +136,8 @@ class TenantAwareVectorStoreTest {
                 .withFilterExpression(userFilter);
 
         Filter.Expression expectedCombinedFilter = builder.and(
-                builder.eq("tenantId", TEST_TENANT_ID).build(),
-                userFilter
+                builder.eq("tenantId", TEST_TENANT_ID),
+                builder.eq("category", "FINANCE")
         ).build();
 
         when(delegateVectorStore.similaritySearch(any(SearchRequest.class)))
