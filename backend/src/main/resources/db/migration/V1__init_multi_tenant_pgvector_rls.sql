@@ -1,4 +1,4 @@
-﻿-- 1. Enable pgvector extension
+-- 1. Enable pgvector extension
 CREATE EXTENSION IF NOT EXISTS vector;
 
 -- 2. Multi-tenant vector_store table
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS vector_store (
     tenant_id VARCHAR(64) NOT NULL DEFAULT current_setting('app.current_tenant', true),
     content TEXT,
     metadata JSONB,
-    embedding VECTOR(1536) NOT NULL
+    embedding VECTOR(768) NOT NULL
 );
 
 -- 3. HNSW Vector Index

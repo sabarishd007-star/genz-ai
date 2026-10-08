@@ -25,19 +25,20 @@ spring:
       max-request-size: 50MB
   ai:
     openai:
-      api-key: ${LLM_API_KEY:your_openai_api_key_here}
+      base-url: ${LLM_BASE_URL:http://localhost:11434}
+      api-key: ${LLM_API_KEY:ollama}
       embedding:
         options:
-          model: text-embedding-3-small
+          model: nomic-embed-text
       chat:
         options:
-          model: gpt-4o-mini
+          model: llama3.2
     vectorstore:
       pgvector:
         index-type: HNSW
         distance-type: COSINE_DISTANCE
-        dimensions: 1536
-        initialize-schema: true
+        dimensions: 768
+        initialize-schema: false
         schema-name: public
         table-name: vector_store
 
