@@ -138,7 +138,7 @@ class MiniGPTGUI:
 
     def _create_slider(self, parent, label_text, from_, to, default, resolution, row):
         ttk.Label(parent, text=label_text).grid(row=row, column=0, sticky=tk.W, pady=2)
-        var = tk.DoubleValue(value=default)
+        var = tk.DoubleVar(value=default)
         slider = ttk.Scale(parent, from_=from_, to=to, variable=var, orient=tk.HORIZONTAL)
         slider.grid(row=row, column=1, sticky=(tk.W, tk.E), padx=10, pady=2)
         val_label = ttk.Label(parent, text=str(default), width=6)
