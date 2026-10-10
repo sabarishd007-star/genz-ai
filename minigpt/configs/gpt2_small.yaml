@@ -1,0 +1,30 @@
+model:
+  name: "gpt2_small"
+  n_layer: 12
+  n_embd: 768
+  n_head: 12
+  block_size: 1024
+  vocab_size: 50257
+  dropout: 0.1
+  bias: true
+
+training:
+  micro_batch_size: 2
+  gradient_accumulation_steps: 16 # Effective batch size = 32
+  learning_rate: 6.0e-4
+  min_lr: 6.0e-5
+  weight_decay: 0.1
+  beta1: 0.9
+  beta2: 0.95
+  grad_clip: 1.0
+  warmup_steps: 500
+  max_steps: 10000
+  use_amp: true
+  dtype: "bfloat16"
+  grad_checkpointing: true
+
+data:
+  dataset_name: "roneneldan/TinyStories"
+  train_split_ratio: 0.8
+  tokenizer_path: "models/tokenizer.json"
+  processed_dir: "data/processed"

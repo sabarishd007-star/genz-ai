@@ -1,0 +1,23 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Checkpoints and weights (large binary files > 100MB exceed GitHub limits)
+models/checkpoints/*.pt
+*.pt
+*.bin
+*.pth
+
+# Dataset binaries and raw cache
+data/processed/*.bin
+data/raw/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/

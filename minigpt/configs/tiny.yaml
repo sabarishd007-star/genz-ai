@@ -1,0 +1,30 @@
+model:
+  name: "tiny"
+  n_layer: 6
+  n_embd: 384
+  n_head: 6
+  block_size: 256
+  vocab_size: 16000
+  dropout: 0.1
+  bias: false
+
+training:
+  micro_batch_size: 8
+  gradient_accumulation_steps: 4  # Effective batch size = 32
+  learning_rate: 6.0e-4
+  min_lr: 6.0e-5
+  weight_decay: 0.1
+  beta1: 0.9
+  beta2: 0.95
+  grad_clip: 1.0
+  warmup_steps: 100
+  max_steps: 3000
+  use_amp: true
+  dtype: "bfloat16" # falls back to float16 if unsupported
+  grad_checkpointing: false
+
+data:
+  dataset_name: "roneneldan/TinyStories"
+  train_split_ratio: 0.8
+  tokenizer_path: "models/tokenizer.json"
+  processed_dir: "data/processed"

@@ -1,0 +1,17 @@
+# Core Framework & Compute
+torch>=2.1.0
+numpy>=1.24.0
+
+# Data & Tokenization
+datasets>=2.14.0
+tokenizers>=0.14.0
+transformers>=4.35.0
+pyyaml>=6.0
+
+# Visualization & Progress
+matplotlib>=3.7.0
+tqdm>=4.66.0
+tensorboard>=2.14.0
+
+# System Utility
+psutil>=5.9.0
