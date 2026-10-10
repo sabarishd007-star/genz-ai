@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LogOut, BookOpen, MessageSquare, FileText, Compass, Code, LayoutDashboard } from 'lucide-react';
+import { LogOut, BookOpen, MessageSquare, FileText, Compass, Code, LayoutDashboard, Cpu } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
   const { user, logout } = useAuth();
@@ -14,6 +14,7 @@ export const AppLayout: React.FC = () => {
 
   const navItems = [
     { label: 'Dashboard', path: '/app/dashboard', icon: LayoutDashboard },
+    { label: 'MiniGPT Studio', path: '/app/minigpt', icon: Cpu },
     { label: 'AI Chat', path: '/app/chat', icon: MessageSquare },
     { label: 'Documents & RAG', path: '/app/documents', icon: FileText },
     { label: 'Study Planner', path: '/app/study', icon: BookOpen },
