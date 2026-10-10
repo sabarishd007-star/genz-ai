@@ -37,11 +37,11 @@ class CustomBPETokenizer:
             save_path = Path(save_path)
             save_path.parent.mkdir(parents=True, exist_ok=True)
             self.tokenizer.save(str(save_path))
-            print(f"[✓] Custom BPE Tokenizer saved to: {save_path}")
+            print(f"[OK] Custom BPE Tokenizer saved to: {save_path}")
 
     def load(self, load_path: Union[str, Path]):
         self.tokenizer = Tokenizer.from_file(str(load_path))
-        print(f"[✓] Tokenizer loaded from: {load_path}")
+        print(f"[OK] Tokenizer loaded from: {load_path}")
 
     def encode(self, text: str) -> List[int]:
         return self.tokenizer.encode(text).ids

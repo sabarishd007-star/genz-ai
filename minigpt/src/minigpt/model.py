@@ -12,7 +12,7 @@ Implements a decoder-only Transformer (GPT-style) with:
 import math
 import inspect
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Optional, Tuple, List, Any
 
 import torch
 import torch.nn as nn
@@ -90,7 +90,12 @@ class CausalSelfAttention(nn.Module):
                 ),
             )
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self,
+        x: torch.Tensor,
+        kv_cache: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
+        use_cache: bool = False,
+    ) -> Tuple[torch.Tensor, Optional[Tuple[torch.Tensor, torch.Tensor]]]:
         B, T, C = x.shape  # (batch, seq_len, n_embd)
 
         # Compute Q, K, V all at once then split
@@ -101,26 +106,37 @@ class CausalSelfAttention(nn.Module):
         k = k.view(B, T, self.n_head, self.head_dim).transpose(1, 2)
         v = v.view(B, T, self.n_head, self.head_dim).transpose(1, 2)
 
+        if kv_cache is not None:
+            past_k, past_v = kv_cache
+            k = torch.cat([past_k, k], dim=2)
+            v = torch.cat([past_v, v], dim=2)
+
+        new_kv_cache = (k, v) if use_cache else None
+        total_k_len = k.size(2)
+
         if self.flash:
             # Flash Attention - handles masking, scaling, and softmax internally
+            # is_causal is True during training or prompt encoding when T == total_k_len > 1
+            is_causal = (T == total_k_len) and (T > 1)
             y = F.scaled_dot_product_attention(
                 q, k, v,
                 attn_mask=None,
                 dropout_p=self.dropout_p if self.training else 0.0,
-                is_causal=True,
+                is_causal=is_causal,
             )
         else:
             # Manual scaled dot-product attention with causal mask
             scale = 1.0 / math.sqrt(self.head_dim)
             att = (q @ k.transpose(-2, -1)) * scale
-            att = att.masked_fill(self.bias[:, :, :T, :T] == 0, float("-inf"))
+            if T > 1 and T == total_k_len:
+                att = att.masked_fill(self.bias[:, :, :T, :T] == 0, float("-inf"))
             att = F.softmax(att, dim=-1)
             att = self.attn_dropout(att)
             y = att @ v  # (B, n_head, T, head_dim)
 
         # Re-assemble heads: (B, n_head, T, head_dim) -> (B, T, C)
         y = y.transpose(1, 2).contiguous().view(B, T, C)
-        return self.resid_dropout(self.c_proj(y))
+        return self.resid_dropout(self.c_proj(y)), new_kv_cache
 
 
 class MLP(nn.Module):
@@ -150,10 +166,16 @@ class Block(nn.Module):
         self.ln_2 = LayerNorm(config.n_embd, bias=config.bias)
         self.mlp  = MLP(config)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = x + self.attn(self.ln_1(x))  # Residual connection around attention
+    def forward(
+        self,
+        x: torch.Tensor,
+        kv_cache: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
+        use_cache: bool = False,
+    ) -> Tuple[torch.Tensor, Optional[Tuple[torch.Tensor, torch.Tensor]]]:
+        attn_out, new_kv = self.attn(self.ln_1(x), kv_cache=kv_cache, use_cache=use_cache)
+        x = x + attn_out  # Residual connection around attention
         x = x + self.mlp(self.ln_2(x))   # Residual connection around MLP
-        return x
+        return x, new_kv
 
 
 # ---------------------------------------------------------------------------
@@ -220,33 +242,43 @@ class MiniGPT(nn.Module):
         self,
         idx: torch.Tensor,
         targets: Optional[torch.Tensor] = None,
-    ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[torch.Tensor]]:
+        kv_caches: Optional[List[Tuple[torch.Tensor, torch.Tensor]]] = None,
+        use_cache: bool = False,
+    ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Any]:
         """Forward pass.
 
         Args:
-            idx:     (B, T) integer token indices.
-            targets: (B, T) integer target indices for loss computation.
+            idx:        (B, T) integer token indices.
+            targets:    (B, T) integer target indices for loss computation.
+            kv_caches:  Optional list of (K, V) cache tuples per layer.
+            use_cache:  Whether to return updated KV caches for fast autoregressive generation.
 
         Returns:
-            logits:     (B, T, vocab_size) unnormalised log probabilities.
+            logits:     (B, T, vocab_size) or (B, 1, vocab_size) unnormalised log probabilities.
             loss:       Scalar cross-entropy loss (None if targets not given).
-            perplexity: exp(loss) as a convenience metric (None if no loss).
+            perplexity: exp(loss) or updated kv_caches (if use_cache is True).
         """
         device = idx.device
         B, T = idx.shape
-        assert T <= self.config.block_size, (
-            f"Sequence length {T} exceeds model block_size {self.config.block_size}"
+        past_len = kv_caches[0][0].shape[2] if kv_caches is not None else 0
+        total_len = past_len + T
+        assert total_len <= self.config.block_size, (
+            f"Sequence length {total_len} exceeds model block_size {self.config.block_size}"
         )
 
         # Token + positional embeddings
-        pos = torch.arange(0, T, dtype=torch.long, device=device)  # (T,)
+        pos = torch.arange(past_len, total_len, dtype=torch.long, device=device)  # (T,)
         tok_emb = self.transformer.wte(idx)   # (B, T, n_embd)
         pos_emb = self.transformer.wpe(pos)   # (T, n_embd) - broadcast over B
         x = self.transformer.drop(tok_emb + pos_emb)
 
         # Pass through all Transformer blocks
-        for block in self.transformer.h:
-            x = block(x)
+        new_kv_caches = [] if use_cache else None
+        for i, block in enumerate(self.transformer.h):
+            layer_kv = kv_caches[i] if kv_caches is not None else None
+            x, new_kv = block(x, kv_cache=layer_kv, use_cache=use_cache)
+            if use_cache:
+                new_kv_caches.append(new_kv)
 
         x = self.transformer.ln_f(x)
 
@@ -263,6 +295,8 @@ class MiniGPT(nn.Module):
         else:
             # Inference: only compute logits for the last position (efficiency)
             logits = self.lm_head(x[:, [-1], :])  # (B, 1, vocab_size)
+            if use_cache:
+                return logits, None, new_kv_caches
             return logits, None, None
 
     # ------------------------------------------------------------------
