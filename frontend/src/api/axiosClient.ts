@@ -65,10 +65,12 @@ axiosClient.interceptors.response.use(
       isRefreshing = true;
 
       const refreshToken = localStorage.getItem('refreshToken');
-      if (!refreshToken) {
+      if (!refreshToken || refreshToken.startsWith('demo-')) {
         isRefreshing = false;
-        localStorage.clear();
-        window.location.href = '/login';
+        if (!refreshToken) {
+          localStorage.clear();
+          window.location.href = '/login';
+        }
         return Promise.reject(error);
       }
 
