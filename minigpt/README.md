@@ -8,12 +8,13 @@ A scratch-built, lightweight GPT-style Causal Language Model and Desktop Worksta
 
 ```
 minigpt/
-├── configs/        # tiny.yaml, small.yaml
+├── configs/        # tiny.yaml, small.yaml, python_code.yaml, wikipedia.yaml
 ├── data/           # raw/, processed/ (.bin memory-mapped files)
-├── models/         # checkpoints (best.pt, latest.pt, loss_curve.png)
+├── models/         # checkpoints (best.pt, latest.pt, evaluation_report.md)
 ├── scripts/        # check_env.py, prepare_data.py, train.py, evaluate.py, generate.py
 ├── src/minigpt/    # model.py, tokenizer.py, data.py, sampling.py
 ├── app/            # gui.py (Tkinter Desktop Workstation)
+├── DATASETS.md     # Comprehensive dataset directory, attribution & scaling theory
 ├── requirements.txt
 └── README.md
 ```
@@ -48,13 +49,20 @@ minigpt/
 
 ## 🚀 Step-by-Step Usage Guide
 
-### Step 1: Prepare Data & Train Tokenizer
+### Step 1: Prepare Data & Train Tokenizer (Multi-Domain Pipeline)
 
-Downloads the TinyStories dataset subset, trains a byte-level BPE tokenizer (16k vocab), and formats sequences into memory-mapped `uint16` binary files:
+MiniGPT features an interactive dataset ingestion pipeline with `ftfy` text cleaning and streaming caps. Choose from Stories, Python Code, Simple Wikipedia, News, or FineWeb-Edu:
 
 ```bash
-python scripts/prepare_data.py --config configs/tiny.yaml
+# Launch interactive domain selector menu:
+python scripts/prepare_data.py --interactive
+
+# Or directly ingest a specific domain:
+python scripts/prepare_data.py --dataset stories --config configs/tiny.yaml
+python scripts/prepare_data.py --dataset python --config configs/python_code.yaml --domain_subdir
 ```
+
+For complete dataset licensing, papers, and parameters, see [DATASETS.md](DATASETS.md).
 
 ### Step 2: Train the Model
 
@@ -92,3 +100,16 @@ python scripts/evaluate.py --config configs/tiny.yaml --checkpoint models/checkp
 2. **Gradient Accumulation:** Bypasses VRAM limits on 4GB laptop GPUs by processing small micro-batches sequentially and accumulating gradients over multiple steps before executing an optimizer step.
 3. **Weight Tying:** Shares the embedding weight matrix (`wte`) with the final output projection head (`lm_head`), saving over 6 million parameters (~35% of total model footprint).
 4. **KV-Caching:** Stores past Keys and Values during inference, converting autoregressive attention complexity from $O(T^2)$ down to $O(1)$ per new token step.
+5. **Windows OS Note:** As highlighted in Karpathy's nanoGPT, `torch.compile` is bypassed on Windows environments for native stability.
+
+---
+
+## 📖 Academic References & Inspiration
+
+- **nanoGPT & nanochat:** Andrej Karpathy ([nanoGPT GitHub](https://github.com/karpathy/nanoGPT), [nanochat](https://github.com/karpathy/nanochat))
+- **Video Lecture:** Andrej Karpathy's *Neural Networks: Zero to Hero — "Let's build GPT: from scratch, in code"* ([YouTube](https://www.youtube.com/watch?v=kCc8FmEb1nY))
+- **Attention Is All You Need:** Vaswani et al., 2017 ([arXiv:1706.03762](https://arxiv.org/abs/1706.03762))
+- **TinyStories Paper:** Eldan & Li, 2023 ([arXiv:2305.07759](https://arxiv.org/abs/2305.07759))
+- **FineWeb Paper:** Penedo et al., 2024 ([arXiv:2406.17557](https://arxiv.org/abs/2406.17557))
+- **Chinchilla Scaling Laws:** Hoffmann et al., 2022 ([arXiv:2203.15556](https://arxiv.org/abs/2203.15556))
+
