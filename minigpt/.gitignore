@@ -11,6 +11,7 @@ models/checkpoints/*.pt
 
 # Dataset binaries and raw cache
 data/processed/*.bin
+data/processed/**/*.bin
 data/raw/
 
 # Virtual environments

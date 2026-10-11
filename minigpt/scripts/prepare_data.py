@@ -262,11 +262,11 @@ def prepare_data(
     train_ratio = config["data"].get("train_split_ratio", 0.8)
     vocab_size = config["model"].get("vocab_size", 16000)
 
-    # 3. Setup paths (support separate domain subdirectory if requested)
+    # 3. Setup paths (prevent redundant nested domain directory)
     base_processed = Path(config["data"]["processed_dir"])
     base_tokenizer = Path(config["data"]["tokenizer_path"])
 
-    if domain_subdir:
+    if domain_subdir and base_processed.name != dataset_key:
         processed_dir = project_root / base_processed / dataset_key
         tokenizer_path = project_root / base_tokenizer.parent / f"{dataset_key}_tokenizer.json"
     else:
