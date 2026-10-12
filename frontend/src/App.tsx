@@ -10,6 +10,7 @@ import { ChatPage } from './pages/ChatPage';
 import { DocumentsPage } from './pages/DocumentsPage';
 import { MiniGptStudio } from './pages/MiniGptStudio';
 import { AptitudePage } from './pages/AptitudePage';
+import { StudyPlannerPage } from './pages/StudyPlannerPage';
 
 export const App: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ export const App: React.FC = () => {
               <Route path="chat" element={<ChatPage />} />
               <Route path="documents" element={<DocumentsPage />} />
               <Route path="aptitude" element={<AptitudePage />} />
+              <Route path="study" element={<StudyPlannerPage />} />
               <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
             </Route>
           </Route>
