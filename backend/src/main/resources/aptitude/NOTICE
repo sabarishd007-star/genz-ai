@@ -1,0 +1,13 @@
+# Attribution & License Notice
+
+This product bundles questions derived from the AQuA-RAT dataset.
+
+Dataset: AQuA-RAT (Algebra Question Answering with Rationales)
+Source: https://github.com/google-deepmind/AQuA / https://huggingface.co/datasets/deepmind/aqua_rat
+Copyright: Copyright (c) Google Inc.
+License: Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+
+Citation:
+Ling, W., Yogatama, D., Dyer, C., & Blunsom, P. (2017).
+Program Induction by Rationale Generation: Learning to Solve and Explain Algebraic Word Problems.
+In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 158–167, Vancouver, Canada. Association for Computational Linguistics.

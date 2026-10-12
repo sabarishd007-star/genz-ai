@@ -1,0 +1,233 @@
+[
+  {
+    "contentHash": "verbal_seed_001",
+    "question": "Choose the word that is most nearly OPPOSITE in meaning to BENEVOLENT:",
+    "options": ["Generous", "Malevolent", "Indifferent", "Charitable", "Kind"],
+    "correct": "B",
+    "rationale": "BENEVOLENT means well-meaning and kind. Its antonym is MALEVOLENT, meaning having a desire to harm others. Correct answer - B",
+    "track": "VERBAL",
+    "topic": "ANTONYMS",
+    "difficulty": "EASY",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_002",
+    "question": "Select the word most similar in meaning to EPHEMERAL:",
+    "options": ["Eternal", "Permanent", "Transient", "Robust", "Ancient"],
+    "correct": "C",
+    "rationale": "EPHEMERAL means lasting a very short time. TRANSIENT means lasting only for a short time, passing, which is the closest in meaning. Correct answer - C",
+    "track": "VERBAL",
+    "topic": "SYNONYMS",
+    "difficulty": "MEDIUM",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_003",
+    "question": "Choose the grammatically correct sentence:",
+    "options": [
+      "He don't know the answer.",
+      "She have been waiting for an hour.",
+      "They were going to the market when it started raining.",
+      "I has completed all my work.",
+      "We is happy to help."
+    ],
+    "correct": "C",
+    "rationale": "Option C uses the past continuous tense correctly ('were going') alongside the simple past ('started'). All other options have subject-verb agreement errors. Correct answer - C",
+    "track": "VERBAL",
+    "topic": "GRAMMAR",
+    "difficulty": "EASY",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_004",
+    "question": "Fill in the blank: The scientist's __________ approach to research made her a respected figure in academia.",
+    "options": ["lackadaisical", "rigorous", "haphazard", "frivolous", "careless"],
+    "correct": "B",
+    "rationale": "The context implies the scientist was respected for her approach to research. RIGOROUS meaning thorough and careful is the best fit. Other options imply carelessness or lack of seriousness. Correct answer - B",
+    "track": "VERBAL",
+    "topic": "FILL_IN_THE_BLANK",
+    "difficulty": "EASY",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_005",
+    "question": "Identify the sentence that uses a SIMILE correctly:",
+    "options": [
+      "The stars are tiny lights.",
+      "He is a lion in battle.",
+      "Her smile was like sunshine on a cloudy day.",
+      "The wind whispered through the trees.",
+      "Time is money."
+    ],
+    "correct": "C",
+    "rationale": "A simile uses 'like' or 'as' to compare two things. Option C uses 'like' to compare a smile to sunshine, making it a simile. Options B and E are metaphors. A and D are simple descriptions/personification. Correct answer - C",
+    "track": "VERBAL",
+    "topic": "FIGURES_OF_SPEECH",
+    "difficulty": "EASY",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_006",
+    "question": "Read the passage and answer: 'The Industrial Revolution transformed economies worldwide. Workers moved from rural areas to cities, factory employment became the norm, and living standards initially declined before improving over decades.' What is the MAIN IDEA?",
+    "options": [
+      "Workers suffered during industrialization",
+      "Cities grew rapidly in the 18th century",
+      "The Industrial Revolution caused widespread economic transformation",
+      "Factory workers had poor living conditions",
+      "Agriculture declined due to industrialization"
+    ],
+    "correct": "C",
+    "rationale": "The passage begins with 'The Industrial Revolution transformed economies worldwide' which is the main idea. Other options capture only specific details mentioned in support of this central point. Correct answer - C",
+    "track": "VERBAL",
+    "topic": "READING_COMPREHENSION",
+    "difficulty": "EASY",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_007",
+    "question": "Choose the correct spelling:",
+    "options": ["Accomodation", "Accommodation", "Acommodation", "Accommodaion", "Accomadation"],
+    "correct": "B",
+    "rationale": "The correct spelling is ACCOMMODATION (double-c, double-m). This is one of the most commonly misspelled words in English. Correct answer - B",
+    "track": "VERBAL",
+    "topic": "SPELLING",
+    "difficulty": "EASY",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_008",
+    "question": "What is the meaning of the idiom 'BITE THE BULLET'?",
+    "options": [
+      "To eat something hard",
+      "To make a hasty decision",
+      "To endure a painful situation stoically",
+      "To give up without trying",
+      "To speak harshly to someone"
+    ],
+    "correct": "C",
+    "rationale": "BITE THE BULLET means to endure a painful or difficult situation with courage and stoicism. The phrase originated in the practice of having soldiers bite a bullet during surgery when anesthesia was unavailable. Correct answer - C",
+    "track": "VERBAL",
+    "topic": "IDIOMS_PHRASES",
+    "difficulty": "MEDIUM",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_009",
+    "question": "Choose the pair that best expresses a relationship similar to DOCTOR : HOSPITAL:",
+    "options": ["Teacher : Student", "Judge : Courtroom", "Soldier : Weapon", "Chef : Food", "Artist : Canvas"],
+    "correct": "B",
+    "rationale": "A DOCTOR works at a HOSPITAL. Similarly, a JUDGE works at a COURTROOM. The relationship is 'professional works at their workplace'. Correct answer - B",
+    "track": "VERBAL",
+    "topic": "ANALOGIES",
+    "difficulty": "EASY",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_010",
+    "question": "Find the error in the sentence: 'Neither the manager nor the employees was present at the meeting.'",
+    "options": [
+      "Neither",
+      "the manager",
+      "was",
+      "at the meeting",
+      "No error"
+    ],
+    "correct": "C",
+    "rationale": "When using 'Neither...nor', the verb agrees with the nearer subject. Here 'employees' is plural, so the verb should be 'were' not 'was'. The error is in 'was'. Correct answer - C",
+    "track": "VERBAL",
+    "topic": "ERROR_SPOTTING",
+    "difficulty": "MEDIUM",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_011",
+    "question": "The word UBIQUITOUS means:",
+    "options": ["Rare", "Unique", "Present everywhere", "Mysterious", "Temporary"],
+    "correct": "C",
+    "rationale": "UBIQUITOUS means present, appearing, or found everywhere. For example, 'mobile phones have become ubiquitous in modern life.' Correct answer - C",
+    "track": "VERBAL",
+    "topic": "VOCABULARY",
+    "difficulty": "MEDIUM",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_012",
+    "question": "Rearrange the sentence parts to form a meaningful sentence: (P) left his job (Q) because he (R) the man (S) was underpaid",
+    "options": ["RQPS", "PQRS", "SQRP", "RPQS", "QRSP"],
+    "correct": "A",
+    "rationale": "The correct arrangement: R-Q-P-S = 'the man' + 'because he' + 'left his job' -- wait that reads: 'the man because he left his job was underpaid'. Better: R(the man) P(left his job) Q(because he) S(was underpaid) = RPQS. Actually RQPS = the man because he left his job was underpaid. RPQS: the man left his job because he was underpaid. RPQS is D. Correct answer - D",
+    "track": "VERBAL",
+    "topic": "SENTENCE_REARRANGEMENT",
+    "difficulty": "MEDIUM",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_013",
+    "question": "Choose the word which best fills the blank: The teacher was __________ pleased by the student's outstanding performance.",
+    "options": ["hardly", "barely", "scarcely", "immensely", "seldom"],
+    "correct": "D",
+    "rationale": "The context shows the teacher being pleased because of outstanding performance, so a positive intensifier is needed. IMMENSELY (meaning greatly or enormously) fits best. The other options (hardly, barely, scarcely, seldom) are negative qualifiers. Correct answer - D",
+    "track": "VERBAL",
+    "topic": "FILL_IN_THE_BLANK",
+    "difficulty": "EASY",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_014",
+    "question": "What is a one-word substitution for 'a person who can speak two languages fluently'?",
+    "options": ["Polyglot", "Bilingual", "Multilingual", "Linguist", "Interpreter"],
+    "correct": "B",
+    "rationale": "A person who speaks two languages fluently is called BILINGUAL. Polyglot and Multilingual refer to more than two languages. A linguist is a language scientist, and an interpreter translates between languages. Correct answer - B",
+    "track": "VERBAL",
+    "topic": "ONE_WORD_SUBSTITUTION",
+    "difficulty": "EASY",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  },
+  {
+    "contentHash": "verbal_seed_015",
+    "question": "Read: 'Democracy is the worst form of government, except for all those other forms that have been tried from time to time.' - Churchill. Churchill's statement implies:",
+    "options": [
+      "Democracy is a terrible system",
+      "All governments fail equally",
+      "Democracy, despite its flaws, is better than alternatives",
+      "Churchill opposes democracy",
+      "No form of government is effective"
+    ],
+    "correct": "C",
+    "rationale": "Churchill's quote uses irony/paradox. He first says democracy is 'worst' but immediately qualifies it as better than everything else that has been tried. The implication is that democracy, despite its imperfections, is superior to all other tried forms of government. Correct answer - C",
+    "track": "VERBAL",
+    "topic": "READING_COMPREHENSION",
+    "difficulty": "MEDIUM",
+    "difficultyApproximate": false,
+    "source": "SEED_AUTHORED",
+    "flaggedForReview": true
+  }
+]

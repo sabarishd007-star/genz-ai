@@ -9,6 +9,7 @@ import { Dashboard } from './pages/Dashboard';
 import { ChatPage } from './pages/ChatPage';
 import { DocumentsPage } from './pages/DocumentsPage';
 import { MiniGptStudio } from './pages/MiniGptStudio';
+import { AptitudePage } from './pages/AptitudePage';
 
 export const App: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ export const App: React.FC = () => {
               <Route path="minigpt" element={<MiniGptStudio />} />
               <Route path="chat" element={<ChatPage />} />
               <Route path="documents" element={<DocumentsPage />} />
+              <Route path="aptitude" element={<AptitudePage />} />
               <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
             </Route>
           </Route>

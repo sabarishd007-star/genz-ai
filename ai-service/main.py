@@ -20,7 +20,7 @@ import torch
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 # ---------------------------------------------------------------------------
 # Setup path resolution to load minigpt package
@@ -117,16 +117,18 @@ class GenerateRequest(BaseModel):
     stream: bool = Field(True, description="Whether to stream response tokens via SSE")
 
 class ChatMessage(BaseModel):
-    role: str
-    content: str
+    role: Optional[str] = "user"
+    content: Optional[Any] = ""
+    model_config = ConfigDict(extra="ignore")
 
 class OpenAIChatRequest(BaseModel):
     model: Optional[str] = "minigpt"
-    messages: List[ChatMessage]
+    messages: List[ChatMessage] = []
     temperature: Optional[float] = 0.8
     top_p: Optional[float] = 0.9
     max_tokens: Optional[int] = 150
     stream: Optional[bool] = False
+    model_config = ConfigDict(extra="ignore")
 
 # ---------------------------------------------------------------------------
 # Health & Status Endpoints

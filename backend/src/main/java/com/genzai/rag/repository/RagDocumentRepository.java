@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface RagDocumentRepository extends JpaRepository<RagDocument, String> {
     List<RagDocument> findByUserIdOrderByUploadedAtDesc(String userId);
+    long countByUserId(String userId);
     void deleteByIdAndUserId(String id, String userId);
 }
