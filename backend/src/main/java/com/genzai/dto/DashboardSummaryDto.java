@@ -15,4 +15,6 @@ public class DashboardSummaryDto {
     private String aptitudeScore; // e.g. "--" or "82%"
     private int activeStreakDays;
     private String userTimezone;
+    private long activeProjectsCount;
+    private String milestoneCompletionRate; // e.g. "80%" or "0%"
 }

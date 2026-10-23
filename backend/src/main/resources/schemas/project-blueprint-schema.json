@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://genzai.com/schemas/project-blueprint.json",
+  "title": "ProjectBlueprint",
+  "type": "object",
+  "required": [
+    "problemStatement",
+    "features",
+    "techStack",
+    "erDiagram",
+    "entities",
+    "apiEndpoints",
+    "architectureDiagram",
+    "roadmap",
+    "fileTree",
+    "risks",
+    "vivaQuestions"
+  ],
+  "properties": {
+    "problemStatement": {
+      "type": "string",
+      "minLength": 20
+    },
+    "features": {
+      "type": "object",
+      "required": ["mvp", "later"],
+      "properties": {
+        "mvp": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "later": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "techStack": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["layer", "choice", "reason"],
+        "properties": {
+          "layer": { "type": "string" },
+          "choice": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "erDiagram": {
+      "type": "string",
+      "minLength": 10
+    },
+    "entities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "attributes"],
+        "properties": {
+          "name": { "type": "string" },
+          "attributes": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "apiEndpoints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["method", "path", "purpose"],
+        "properties": {
+          "method": { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
+          "path": { "type": "string" },
+          "purpose": { "type": "string" }
+        }
+      }
+    },
+    "architectureDiagram": {
+      "type": "string",
+      "minLength": 10
+    },
+    "roadmap": {
+      "type": "object",
+      "required": ["phases"],
+      "properties": {
+        "phases": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["name", "milestones"],
+            "properties": {
+              "name": { "type": "string" },
+              "milestones": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": ["title", "description"],
+                  "properties": {
+                    "title": { "type": "string" },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "fileTree": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["path", "purpose"],
+        "properties": {
+          "path": { "type": "string" },
+          "purpose": { "type": "string" }
+        }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "vivaQuestions": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["question", "modelAnswer", "topic"],
+        "properties": {
+          "question": { "type": "string" },
+          "modelAnswer": { "type": "string" },
+          "topic": { "type": "string" }
+        }
+      }
+    }
+  }
+}

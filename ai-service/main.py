@@ -14,13 +14,13 @@ import os
 import sys
 import time
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Dict, List, Optional
 
 import torch
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field
 
 # ---------------------------------------------------------------------------
 # Setup path resolution to load minigpt package
@@ -117,9 +117,8 @@ class GenerateRequest(BaseModel):
     stream: bool = Field(True, description="Whether to stream response tokens via SSE")
 
 class ChatMessage(BaseModel):
-    role: Optional[str] = "user"
-    content: Optional[Any] = ""
-    model_config = ConfigDict(extra="ignore")
+    role: str
+    content: str
 
 class OpenAIChatRequest(BaseModel):
     model: Optional[str] = "minigpt"
@@ -128,7 +127,6 @@ class OpenAIChatRequest(BaseModel):
     top_p: Optional[float] = 0.9
     max_tokens: Optional[int] = 150
     stream: Optional[bool] = False
-    model_config = ConfigDict(extra="ignore")
 
 # ---------------------------------------------------------------------------
 # Health & Status Endpoints

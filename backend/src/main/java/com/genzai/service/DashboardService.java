@@ -18,6 +18,8 @@ public class DashboardService {
     private final UserActivityService userActivityService;
     private final com.genzai.aptitude.repository.AptitudeAttemptRepository aptitudeAttemptRepository;
     private final com.genzai.study.repository.StudyPlanRepository studyPlanRepository;
+    private final com.genzai.project.repository.ProjectRepository projectRepository;
+    private final com.genzai.project.repository.ProjectMilestoneRepository projectMilestoneRepository;
 
     @Transactional
     public DashboardSummaryDto getDashboardSummary(UUID userId) {
@@ -28,6 +30,8 @@ public class DashboardService {
                     .aptitudeScore("--")
                     .activeStreakDays(1)
                     .userTimezone("Asia/Kolkata")
+                    .activeProjectsCount(0)
+                    .milestoneCompletionRate("0%")
                     .build();
         }
 
@@ -53,6 +57,14 @@ public class DashboardService {
                 userId, com.genzai.study.model.PlanStatus.ACTIVE, today
         );
 
+        // Project metrics
+        long activeProjects = projectRepository.countByUserIdAndStatus(userId, "ACTIVE");
+        long totalMilestones = projectMilestoneRepository.countByUserId(userId);
+        long completedMilestones = projectMilestoneRepository.countByUserIdAndStatus(userId, "DONE");
+        String completionRate = totalMilestones > 0
+                ? Math.round((completedMilestones * 100.0) / totalMilestones) + "%"
+                : "0%";
+
         // Log this activity
         userActivityService.logActivity(userId, "DASHBOARD_VIEW", "Viewed dashboard summary", null);
 
@@ -62,6 +74,8 @@ public class DashboardService {
                 .aptitudeScore(aptitudeScoreStr)
                 .activeStreakDays(streak)
                 .userTimezone(tz)
+                .activeProjectsCount(activeProjects)
+                .milestoneCompletionRate(completionRate)
                 .build();
     }
 }

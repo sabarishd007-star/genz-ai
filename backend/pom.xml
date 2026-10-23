@@ -32,7 +32,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-        </dependencies>
+
+    </dependencies>
     </dependencyManagement>
 
     <dependencies>
@@ -52,6 +53,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <!-- JSON Schema Validator (Draft 2020-12) -->
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>1.4.0</version>
         </dependency>
         <!-- Reactive Streams (for SSE Flux streaming) -->
         <dependency>

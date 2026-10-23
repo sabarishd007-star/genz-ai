@@ -8,15 +8,17 @@ spring:
     name: genz-ai-backend
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:genz_ai}
-    username: ${POSTGRES_USER:genz_user}
-    password: ${POSTGRES_PASSWORD:genz_secure_password_2026}
+    username: ${APP_DB_USER:genz_app}
+    password: ${APP_DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
   flyway:
     enabled: true
-    baseline-on-migrate: true
+    
+    user: ${POSTGRES_USER:genz_user}
+    password: ${POSTGRES_PASSWORD}
     show-sql: false
     properties:
       hibernate:

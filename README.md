@@ -1,74 +1,94 @@
-# GenZ AI
+# GenZ AI — Operational AI Infrastructure & Student Workspace
 
-A modern, production-grade AI platform architecture featuring high-performance backend services, vector database storage, distributed caching, and microservice-driven AI workloads.
+A modern, production-grade local AI platform and student workstation featuring a custom 17M Causal Transformer, document-grounded RAG with PostgreSQL `pgvector`, an adaptive FSRS v6 study planner, an aptitude testing engine, and a project architecture & viva defense workbench.
 
 ---
 
-## Repository Structure
+## 🏛️ The 6 Platform Pillars
+
+1. **MiniGPT Causal Transformer**: 17M parameter causal decoder trained locally on RTX 3050 laptop GPU with custom Byte-Pair Encoding (BPE) tokenizer and real-time inference telemetry.
+2. **FastAPI AI Microservice**: High-performance asynchronous Python service exposing Server-Sent Events (SSE) streaming (`/api/minigpt/generate`) and OpenAI-compatible `/v1/chat/completions`.
+3. **Documents & RAG Intelligence**: PDF notes ingestion, 768-dim `pgvector` HNSW cosine similarity search, strict tenant metadata isolation, and citation-grounded chat.
+4. **Study Planner & Memory Engine**: FullCalendar agenda scheduler with `ts-fsrs` (FSRS v6) spaced repetition flashcards and Pomodoro focus tracking.
+5. **Aptitude & Assessment Engine**: Quantitative, logical, verbal, and technical examination tracks with Practice vs. Timed Exam modes and AI explainability.
+6. **Project Builder & Viva Defense**: Spring Initializr scaffolding generator, Draft 2020-12 schema validation, React Flow roadmap graph visualizer, and server-side 0–10 viva defense scoring.
+
+---
+
+## 📂 Repository Structure
 
 ```
 genz-ai/
-├── GENZ_AI_MASTER_SPEC.md       # Master technical specification
-├── GENZ_AI_MASTER_PROMPT.md     # Master prompt instructions
-├── README.md                    # Project documentation & onboarding
-├── .env.example                 # Template for environment variables
-├── .env                         # Local environment configuration
-├── .gitignore                   # Version control ignore rules
+├── GENZ_AI_MASTER_PROMPT.md     # Master prompt instructions & invariants
+├── README.md                    # Operational guide & run steps
+├── .env.example                 # Environment configuration template
 ├── docker-compose.yml           # Core infrastructure services (Postgres, Redis, MinIO)
-├── docs/                        # Project documentation
-│   ├── architecture/            # System & component architecture diagrams
-│   ├── database/                # Schema designs & migrations
-│   ├── api/                     # OpenAPI/Swagger specs & contracts
-│   └── evaluation/              # AI benchmarking & evaluation metrics
-├── infrastructure/              # Infrastructure scripts & configs
-│   └── postgres/
-│       └── init.sql             # Postgres extension initialization (pgvector, uuid-ossp)
-├── frontend/                    # Web frontend client
-├── backend/                     # Core backend API service (Spring Boot)
-└── ai-service/                  # AI / RAG microservice (FastAPI / Python)
+├── docs/                        # Complete system specifications
+│   ├── architecture/            # System context & component diagrams
+│   ├── database/                # Full ER diagram (V1-V7) & RLS security rules
+│   └── api/                     # Complete API endpoint tables
+├── infrastructure/              # Database extensions & least-privilege init scripts
+│   └── postgres/init.sql        # pgvector, uuid-ossp, genz_app (NOSUPERUSER, NOBYPASSRLS)
+├── frontend/                    # React 18 + Vite + Tailwind + React Flow + FullCalendar
+├── backend/                     # Spring Boot 3.3 Gateway & Core Domain API (Java 17/21)
+├── ai-service/                  # FastAPI microservice serving MiniGPT with SSE
+└── minigpt/                     # PyTorch 17M Transformer from scratch & training scripts
 ```
 
 ---
 
-## Quickstart (Phase 1: Foundation)
+## 🚀 Step-by-Step Run Instructions
 
-### 1. Prerequisites
-- [Docker & Docker Compose](https://www.docker.com/) (Docker v20+)
-- [Git](https://git-scm.com/)
-
-### 2. Environment Setup
-Verify or copy the environment configuration:
-```bash
-cp .env.example .env
-```
-
-### 3. Start Core Infrastructure Services
-Launch PostgreSQL (with `pgvector`), Redis, and MinIO in detached mode:
+### 1. Start Infrastructure Services (Docker)
+Ensure Docker Desktop is running, then launch PostgreSQL (with `pgvector`), Redis, and MinIO:
 ```bash
 docker compose up -d
 ```
 
-### 4. Verify Database & Extensions
-Confirm that `pgvector` and `uuid-ossp` extensions have been initialized properly:
+Verify that the least-privilege non-superuser role `genz_app` and extensions are active:
 ```bash
-docker exec -it genz-postgres psql -U genz_user -d genz_ai -c "\dx"
+docker exec -it genz-postgres psql -U genz_user -d genz_ai -c "SELECT rolname, rolsuper, rolbypassrls FROM pg_roles WHERE rolname = 'genz_app';"
 ```
-
 Expected output:
 ```text
-                                  List of installed extensions
-   Name    | Version |   Schema   |                            Description                            
------------+---------+------------+-------------------------------------------------------------------
- plpgsql   | 1.0     | pg_catalog | PL/pgSQL procedural language
- uuid-ossp | 1.4     | public     | generate universally unique identifiers (UUIDs)
- vector    | 0.8.0   | public     | vector data type and ivfflat and hnsw access methods
+ rolname  | rolsuper | rolbypassrls 
+----------+----------+--------------
+ genz_app | f        | f
 ```
 
-### 5. Services Endpoints
+### 2. Run the Core Backend API (Spring Boot)
+The backend applies Flyway migrations (`V1` to `V7`), sets up RLS policies, and listens on port `8080`:
+```bash
+cd backend
+./mvnw clean spring-boot:run
+```
+To run the automated test suite (including cross-user isolation and schema validation):
+```bash
+./mvnw test
+```
 
-| Service | Port | Description |
-|---|---|---|
-| PostgreSQL (pgvector) | `5432` | Relational & vector embeddings storage |
-| Redis | `6379` | In-memory caching & session management |
-| MinIO S3 API | `9000` | Object storage |
-| MinIO Web Console | `9001` | Object storage admin console (User: `genz_minio`) |
+### 3. Run the AI Microservice (FastAPI / MiniGPT)
+In a new terminal window:
+```bash
+cd ai-service
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+### 4. Run the Web Client (Vite / React)
+In another terminal window:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Open your browser at **[http://localhost:5173](http://localhost:5173)**.
+
+---
+
+## 🔒 Security Invariants Enforced
+
+* **Strict `user_id` Tenant Scoping**: All queries run under PostgreSQL `FORCE ROW LEVEL SECURITY` matching `app.current_tenant`.
+* **Least-Privilege Connection**: Application connects strictly as `genz_app` (`NOSUPERUSER NOBYPASSRLS`).
+* **Server-Side Scoring**: Test timing, question scoring, and viva defense evaluations are strictly calculated on the server; client answers are treated strictly as data.
+* **Deterministic Fallback**: When offline or if external LLM APIs are unavailable, the system smoothly falls back to schema-valid domain templates and keyword heuristics labeled `"indicative only"`.

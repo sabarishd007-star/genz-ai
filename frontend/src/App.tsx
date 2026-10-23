@@ -11,6 +11,7 @@ import { DocumentsPage } from './pages/DocumentsPage';
 import { MiniGptStudio } from './pages/MiniGptStudio';
 import { AptitudePage } from './pages/AptitudePage';
 import { StudyPlannerPage } from './pages/StudyPlannerPage';
+import { ProjectBuilderPage } from './pages/ProjectBuilderPage';
 
 export const App: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ export const App: React.FC = () => {
               <Route path="documents" element={<DocumentsPage />} />
               <Route path="aptitude" element={<AptitudePage />} />
               <Route path="study" element={<StudyPlannerPage />} />
+              <Route path="projects" element={<ProjectBuilderPage />} />
               <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
             </Route>
           </Route>
